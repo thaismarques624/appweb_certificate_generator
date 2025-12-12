@@ -34,7 +34,7 @@ planilha = st.file_uploader("💜 Envie a planilha de participantes (CSV ou Exce
 
 st.info(
     "A planilha deve conter as colunas: "
-    "Nome, Evento, Participante, Local, Data, Duracao."
+    "Nome, Evento, Participante, Local, Data, Duracao"
 )
 
 # ---------------------------
@@ -125,6 +125,9 @@ if st.button("🚀 Gerar Certificados"):
             df = pd.read_csv(planilha)
         else:
             df = pd.read_excel(planilha)
+        
+        # --- Ajuste da data ---
+        df["Data"] = pd.to_datetime(df["Data"]).dt.strftime("%d/%m/%Y")
 
         colunas_necessarias = ["Nome", "Evento", "Participante", "Local", "Data", "Duracao"]
         if not all(col in df.columns for col in colunas_necessarias):
