@@ -1,13 +1,15 @@
 import os
 import hmac
 import streamlit as st
-from dotenv import load_dotenv
 
 st.set_page_config(page_title="Login", page_icon="🔐", layout="centered")
 
-load_dotenv()  # <-- ESSENCIAL
 
-APP_PASSWORD = os.getenv("APP_PASSWORD")
+APP_PASSWORD = os.getenv("APP_PASSWORD") or st.secrets.get("APP_PASSWORD")
+
+if not APP_PASSWORD:
+    st.error("APP_PASSWORD not configured")
+    st.stop()
 
 if not APP_PASSWORD:
     raise RuntimeError("APP_PASSWORD not defined")
