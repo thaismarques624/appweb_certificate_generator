@@ -1,16 +1,16 @@
 import os
 import hmac
 import streamlit as st
-
+from dotenv import load_dotenv
 
 st.set_page_config(page_title="Login", page_icon="🔐", layout="centered")
 
+load_dotenv()  # <-- ESSENCIAL
 
-# ✅ Recomendo guardar a senha em variável de ambiente:
-# Windows (PowerShell):  $env:APP_PASSWORD="sua_senha"
-# macOS/Linux:          export APP_PASSWORD="sua_senha"
-APP_PASSWORD = os.getenv("APP_PASSWORD", "senha_teste")
+APP_PASSWORD = os.getenv("APP_PASSWORD")
 
+if not APP_PASSWORD:
+    raise RuntimeError("APP_PASSWORD not defined")
 
 def check_password(typed: str) -> bool:
     # comparação segura (evita timing attack)
