@@ -5,14 +5,17 @@ import streamlit as st
 st.set_page_config(page_title="Login", page_icon="🔐", layout="centered")
 
 
-APP_PASSWORD = os.getenv("APP_PASSWORD") or st.secrets.get("APP_PASSWORD")
+APP_PASSWORD = os.getenv("APP_PASSWORD")
+
+if not APP_PASSWORD:
+    try:
+        APP_PASSWORD = st.secrets["APP_PASSWORD"]
+    except Exception:
+        APP_PASSWORD = None
 
 if not APP_PASSWORD:
     st.error("APP_PASSWORD not configured")
     st.stop()
-
-if not APP_PASSWORD:
-    raise RuntimeError("APP_PASSWORD not defined")
 
 def check_password(typed: str) -> bool:
     # comparação segura (evita timing attack)
