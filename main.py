@@ -4,7 +4,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Login", page_icon="🔐", layout="centered")
 
-
+#AJUSTADO
 APP_PASSWORD = os.getenv("APP_PASSWORD")
 
 if not APP_PASSWORD:
